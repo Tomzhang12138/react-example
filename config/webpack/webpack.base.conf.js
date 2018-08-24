@@ -10,9 +10,9 @@ let config = {
     },
     output: {
         path: path.resolve(__dirname, '../../devBuild'),
-        filename: '[name].js',
-        chunkFilename: '[name].js',
-        publicPath: '/js'
+        filename: 'js/[name].js',
+        chunkFilename: 'js/[name].js',
+        publicPath: ''
     },
     module: {
         rules: [
@@ -25,6 +25,39 @@ let config = {
                 ],
                 exclude: [
                     path.resolve(__dirname, '../../node_modules')
+                ]
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            attrs: {
+                                first: 1
+                            },
+                            singleton: true,
+                            insertAt: 'top'
+                        }
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            root: '/',
+                            url: true,
+                            alias: {},
+                            import: true,
+                            modules: false,
+                            minimize: false,
+                            sourceMap: false,
+                            camelCase: false,
+                            importLoaders: 0,
+                            localIdentName: '[hash:base64]'
+                        }
+                    },
+                    {
+                        loader: 'less-loader'
+                    }
                 ]
             }
         ]
